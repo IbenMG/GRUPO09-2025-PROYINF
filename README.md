@@ -2,7 +2,7 @@
 Este es el repositorio del grupo 05 conformado por:
 Integrantes
 * Claudio Jimenez - Rol: 202273587-2
-* Lucas Morrison - Rol:
+* Lucas Morrison - Rol: 202273547-3
 * Iben Muñoz - Rol:
 * Rafael Baeza - Rol:
 *  **Tutor**: Rodrigo Ramirez
