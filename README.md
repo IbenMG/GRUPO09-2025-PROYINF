@@ -6,7 +6,7 @@ Integrantes
 * Iben Muñoz - Rol:
 * Rafael Baeza - Rol:
 *  **Tutor**: Rodrigo Ramirez
-*  [enlace video del cliente](https://www.youtube.com/watch?v=abJau21SDIk)
+*  [enlace video presentación del cliente](https://www.youtube.com/watch?v=abJau21SDIk)
 
 ## Wiki
 
