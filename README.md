@@ -4,7 +4,7 @@ Integrantes
 * Claudio Jimenez - Rol: 202273587-2
 * Lucas Morrison - Rol: 202273547-3
 * Iben Muñoz - Rol: 202204674-0
-* Rafael Baeza - Rol:
+* Rafael Baeza - Rol:202204598-1
 *  **Tutor**: Rodrigo Ramirez
 *  [enlace video presentación del cliente](https://www.youtube.com/watch?v=abJau21SDIk)
 
