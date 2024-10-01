@@ -9,9 +9,9 @@ Integrantes
 *  [enlace video presentación del cliente](https://www.youtube.com/watch?v=abJau21SDIk)
 
 ## Cambios Hito N°2
-Iben: Creo un script en python de web_scrapping para archivos PDF tipo informe segun filtros de palabras como "Alimentación sostenible", "Cambio Climatico", "recursos hidricos", que se ingresa en el script y te permite filtrar estos archivos y descargarlos.
-Claudio: HUs y Diagramas de secuencia, corregir errores hito N°1
-Rafael: Hacer ppt presentación N°1
+* Iben: Creo un script en python de web_scrapping para archivos PDF tipo informe segun filtros de palabras como "Alimentación sostenible", "Cambio Climatico", "recursos hidricos", que se ingresa en el script y te permite filtrar estos archivos y descargarlos.
+* Claudio: HUs y Diagramas de secuencia, corregir errores hito N°1
+* Rafael: Hacer ppt presentación N°1
 ## Wiki
 
 Puede acceder a la wiki mediante el siguiente [enlace](https://github.com/ClaudioJimenezA/GRUPO05-2024-PROYINF/wiki)
