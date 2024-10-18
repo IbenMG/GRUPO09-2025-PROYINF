@@ -13,7 +13,7 @@ Integrantes
 * Claudio: HUs y Diagramas de secuencia, corregir errores hito N°1
 * Rafael: Hacer ppt presentación N°1
 ## Cambios Hito N°3
-Claudio: Corregir errores HU
+Claudio: Agregar criterios de exito a las HU
 ## Wiki
 
 Puede acceder a la wiki mediante el siguiente [enlace](https://github.com/ClaudioJimenezA/GRUPO05-2024-PROYINF/wiki)
