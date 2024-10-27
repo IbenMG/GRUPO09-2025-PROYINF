@@ -19,9 +19,16 @@
             <h2>Opciones</h2>
             <ul>
                 <li><a href="{% url 'agregar_fuentes' %}">Agregar Fuentes</a></li>
-                <li><a href="{% url 'modificar_fuentes' %}">Modificar Fuentes</a></li>
-                <li><a href="{% url 'borrar_fuentes' %}">Borrar Fuentes</a></li>
                 <li><a href="{% url 'buscar_fuentes' %}">Buscar Fuentes</a></li>
+                {% for fuente in fuentes %}
+                    <li>
+                        {{ fuente.nombre }} - <a href="{% url 'modificar_fuentes' fuente.id %}">Modificar</a>
+                        <a href="{% url 'borrar_fuentes' fuente.id %}">Borrar</a>
+                    </li>
+                {% empty %}
+                    <li>No hay fuentes disponibles.</li>
+                {% endfor %}
+
             </ul>
         </section>
     </main>

@@ -14,19 +14,22 @@
     </header>
 
     <main>
-        <form method="post">
-            {% csrf_token %}
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" value="{{ fuente.nombre }}" required>
-        
-            <label for="url">Link:</label>
-            <input type="text" name="url" value="{{ fuente.url }}" required>
-        
-            <label for="etiquetas">Etiquetas (separadas por comas):</label>
-            <input type="text" name="etiquetas" value="{{ fuente.etiquetas|join:', ' }}">
-        
-            <button type="submit">Guardar Cambios</button>
+        <form method="get" action="{% url 'buscar_para_modificar' %}">
+            <label for="query">Buscar Fuente:</label>
+            <input type="text" name="query">
+            <button type="submit">Buscar</button>
         </form>
+        
+        <ul>
+            {% for fuente in resultados %}
+                <li>
+                    {{ fuente.nombre }} - <a href="{{ fuente.link }}">{{ fuente.link }}</a>
+                    <a href="{% url 'modificar_fuente' fuente.id %}">Modificar</a>
+                </li>
+            {% empty %}
+                <li>No se encontraron resultados.</li>
+            {% endfor %}
+        </ul>
         <button onclick="window.location.href='{% url 'index' %}'">Regresar al Inicio</button>
     </main>
 

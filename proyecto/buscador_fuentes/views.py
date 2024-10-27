@@ -4,7 +4,8 @@ from .models import Fuente  # Importa el modelo Fuente que creaste
 from buscador_fuentes.services.gestor_fuentes import GestorFuentes
 
 def index(request):
-    return render(request, 'buscador_fuentes/index.html')
+    fuentes = Fuente.objects.all()  # Obtiene todas las fuentes
+    return render(request, 'buscador_fuentes/index.html', {'fuentes': fuentes})
 
 def agregar_fuentes(request):
     if request.method == "POST":
@@ -18,24 +19,36 @@ def agregar_fuentes(request):
         return redirect("index")
     return render(request, 'buscador_fuentes/agregar_fuentes.html')
 
-def modificar_fuentes(request):
-    fuente = Fuente.objects.get(id=id)
+# Búsqueda de fuentes para modificar
+def buscar_para_modificar(request):
+    query = request.GET.get("query")
+    resultados = Fuente.objects.filter(nombre__icontains=query) | Fuente.objects.filter(etiquetas__contains=query)
+    return render(request, "buscador_fuentes/modificar_fuentes.html", {"resultados": resultados})
+
+# Búsqueda de fuentes para borrar
+def buscar_para_borrar(request):
+    query = request.GET.get("query")
+    resultados = Fuente.objects.filter(nombre__icontains=query) | Fuente.objects.filter(etiquetas__contains=query)
+    return render(request, "buscador_fuentes/borrar_fuentes.html", {"resultados": resultados})
+
+# Modificar una fuente
+def modificar_fuentes(request, fuente_id):
+    fuente = Fuente.objects.get(id=fuente_id)
     if request.method == "POST":
         fuente.nombre = request.POST.get("nombre")
-        fuente.url = request.POST.get("url")
+        fuente.link = request.POST.get("link")
         fuente.etiquetas = json.dumps(request.POST.get("etiquetas").split(","))
         fuente.save()
         return redirect("index")
+    return render(request, "buscador_fuentes/modificar_detalle.html", {"fuente": fuente})
 
-    return render(request, "buscador_fuentes/modificar_fuentes.html", {"fuente": fuente})
-
-def borrar_fuentes(request):
-    fuente = Fuente.objects.get(id=id)
+# Borrar una fuente
+def borrar_fuentes(request, fuente_id):
+    fuente = Fuente.objects.get(id=fuente_id)
     if request.method == "POST":
         fuente.delete()
         return redirect("index")
-
-    return render(request, "buscador_fuentes/borrar_fuentes.html", {"fuente": fuente})
+    return render(request, "buscador_fuentes/borrar_confirmar.html", {"fuente": fuente})
 def vistas_fuentes(request):
     return render(request, 'buscador_fuentes/vistas_fuentes.html')
 def buscar_fuentes(request):
