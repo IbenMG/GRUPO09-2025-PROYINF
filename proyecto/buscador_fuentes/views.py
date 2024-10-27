@@ -9,11 +9,11 @@ def index(request):
 def agregar_fuentes(request):
     if request.method == "POST":
         nombre = request.POST.get("nombre")
-        link = request.POST.get("link")
+        url = request.POST.get("url")
         etiquetas = request.POST.get("etiquetas").split(",")
 
         # Crea una nueva fuente
-        nueva_fuente = Fuente(nombre=nombre, link=link, etiquetas=json.dumps(etiquetas))
+        nueva_fuente = Fuente(nombre=nombre, url=url, etiquetas=json.dumps(etiquetas))
         nueva_fuente.save()
         return redirect("index")
     return render(request, 'buscador_fuentes/agregar_fuentes.html')
@@ -22,7 +22,7 @@ def modificar_fuentes(request):
     fuente = Fuente.objects.get(id=id)
     if request.method == "POST":
         fuente.nombre = request.POST.get("nombre")
-        fuente.link = request.POST.get("link")
+        fuente.url = request.POST.get("url")
         fuente.etiquetas = json.dumps(request.POST.get("etiquetas").split(","))
         fuente.save()
         return redirect("index")
@@ -39,8 +39,8 @@ def borrar_fuentes(request):
 def vistas_fuentes(request):
     return render(request, 'buscador_fuentes/vistas_fuentes.html')
 def buscar_fuentes(request):
-    etiqueta = request.GET.get("etiqueta")
-    resultados = Fuente.objects.filter(etiquetas__contains=etiqueta) if etiqueta else []
+    etiquetas = request.GET.get("etiquetas")
+    resultados = Fuente.objects.filter(etiquetas__contains=etiquetas) if etiquetas else []
     return render(request, "buscador_fuentes/buscar_fuentes.html", {"resultados": resultados})
 
 """

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Borrar Fuentes</title>
+    <title>Buscar Fuentes</title>
     <link rel="stylesheet" href="{% static 'buscador_fuentes/css/styles.css' %}">
 </head>
 <body>
@@ -15,14 +15,14 @@
 
     <main>
         <form method="get">
-            <label for="etiqueta">Buscar por Etiqueta:</label>
-            <input type="text" name="etiqueta">
+            <label for="etiquetas">Buscar por Etiqueta:</label>
+            <input type="text" name="etiquetas">
             <button type="submit">Buscar</button>
         </form>
         
         <ul>
             {% for fuente in resultados %}
-                <li>{{ fuente.nombre }} - <a href="{{ fuente.link }}" target="_blank">{{ fuente.link }}</a> - Etiquetas: {{ fuente.etiquetas }}</li>
+                <li>{{ fuente.nombre }} - <a href="{{ fuente.url }}" target="_blank">{{ fuente.url }}</a> - Etiquetas: {{ fuente.etiquetas }}</li>
             {% empty %}
                 <li>No se encontraron resultados.</li>
             {% endfor %}
