@@ -1,4 +1,4 @@
-{% load static %} 
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,44 +7,27 @@
     <title>Filtrar Fuentes - VIGIFIA</title>
     <link rel="stylesheet" href="{% static 'buscador_fuentes/css/styles.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-
 </head>
 <body>
     <header>
-        <h1>Filtrar Fuentes de Información - VIGIFIA</h1>
+        <h1>Sistema de Manejo de Fuentes de Información - VIGIFIA</h1>
         <p>Consulta fuentes relevantes sobre Cambio Climático, Alimentación Sostenible y Recursos Hídricos.</p>
     </header>
 
     <main>
         <section id="filtro-sources">
-            <h2>Filtrar Fuentes</h2>
-            <form id="filter-form">
-                <label for="eje-tematico">Eje Temático:</label>
-                <select id="eje-tematico">
-                    <option value="cambio-climatico">Cambio Climático</option>
-                    <option value="alimentacion-sostenible">Alimentación Sostenible</option>
-                    <option value="recursos-hidricos">Recursos Hídricos</option>
-                </select>
-                
-                <label for="search">Buscar:</label>
-                <input type="text" id="search" placeholder="Ingresa texto a buscar">
-
-                <button type="submit">Buscar</button>
-            </form>
-        </section>
-
-        <section id="resultado">
-            <h2>Resultados de la Búsqueda</h2>
-            <ul id="resultado-list">
-               
+            <h2>Opciones</h2>
+            <ul>
+                <li><a href="{% url 'agregar_fuentes' %}">Agregar Fuentes</a></li>
+                <li><a href="{% url 'modificar_fuentes' %}">Modificar Fuentes</a></li>
+                <li><a href="{% url 'borrar_fuentes' %}">Borrar Fuentes</a></li>
+                <li><a href="{% url 'buscar_fuentes' %}">Buscar Fuentes</a></li>
             </ul>
         </section>
     </main>
 
     <footer>
-        <p></p>
+        <p>Derechos reservados &copy; 2023 VIGIFIA</p>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>
