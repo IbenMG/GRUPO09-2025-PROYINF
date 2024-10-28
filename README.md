@@ -15,6 +15,7 @@ Integrantes
 ## Cambios Hito N°3
 Claudio: Agregar criterios de exito a las HU, aplicacion Django busqueda_fuentes.
 Iben: hacer los templates de html y ayudar con la aplicación Django busqueda_fuentes.
+* [enlace README entrega N°3](https://github.com/ClaudioJimenezA/GRUPO05-2024-PROYINF/wiki/README-hito-N%C2%BA3)
 ## Wiki
 
 Puede acceder a la wiki mediante el siguiente [enlace](https://github.com/ClaudioJimenezA/GRUPO05-2024-PROYINF/wiki)
