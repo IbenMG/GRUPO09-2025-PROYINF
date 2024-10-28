@@ -13,8 +13,8 @@ Integrantes
 * Claudio: HUs y Diagramas de secuencia, corregir errores hito N°1
 * Rafael: Hacer ppt presentación N°1
 ## Cambios Hito N°3
-Claudio: Agregar criterios de exito a las HU, aplicacion Django busqueda_fuentes.
-Iben: hacer los templates de html y ayudar con la aplicación Django busqueda_fuentes.
+* Claudio: Agregar criterios de exito a las HU, aplicacion Django busqueda_fuentes.
+* Iben: hacer los templates de html y ayudar con la aplicación Django busqueda_fuentes.
 * [enlace README entrega N°3](https://github.com/ClaudioJimenezA/GRUPO05-2024-PROYINF/wiki/README-hito-N%C2%BA3)
 ## Wiki
 
