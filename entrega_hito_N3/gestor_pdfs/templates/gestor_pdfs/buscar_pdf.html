@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar PDF</title>
+</head>
+<body>
+    <h1>Buscar PDF</h1>
+    <form method="get" action="{% url 'buscar_pdf' %}">
+        <input type="text" name="q" placeholder="Buscar PDF por nombre...">
+        <button type="submit">Buscar</button>
+    </form>
+    <ul>
+        {% for pdf in pdfs %}
+            <li>{{ pdf.nombre }} - 
+                <a href="{% url 'descargar_pdf' pdf.id %}">Descargar</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'index_pdf' %}">Volver a la lista de PDFs</a>
+</body>
+</html>
