@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrar Fuentes</title>
+    <link rel="stylesheet" href="{% static 'buscador_fuentes/css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Borrar Fuentes</h1>
+        <p>Seleccione una fuente para eliminar.</p>
+    </header>
+
+    <main>
+        <p>¿Estás seguro de que deseas borrar la fuente <strong>{{ fuente.nombre }}</strong>?</p>
+        <form method="get" action="{% url 'buscar_para_borrar' %}">
+            <label for="query">Buscar Fuente:</label>
+            <input type="text" name="query">
+            <button type="submit">Buscar</button>
+        </form>
+        
+        <ul>
+            {% for fuente in resultados %}
+                <li>
+                    {{ fuente.nombre }} - <a href="{{ fuente.link }}">{{ fuente.link }}</a>
+                    <a href="{% url 'borrar_fuente' fuente.id %}">Borrar</a>
+                </li>
+            {% empty %}
+                <li>No se encontraron resultados.</li>
+            {% endfor %}
+        </ul>
+        <button onclick="window.location.href='{% url 'index' %}'">Regresar al Inicio</button>
+    </main>
+
+    <footer>
+        <p>Derechos reservados &copy; 2023 VIGIFIA</p>
+    </footer>
+</body>
+</html>

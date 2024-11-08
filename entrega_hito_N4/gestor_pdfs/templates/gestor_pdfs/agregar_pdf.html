@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir PDF</title>
+    <link rel="stylesheet" href="{% static 'gestor_pdfs/css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Subir PDF</h1>
+    </header>
+
+    <main>
+        <!-- Mostrar los mensajes de éxito o error -->
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="message">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">  <!-- Asegúrate de incluir enctype -->
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Guardar PDF</button>
+        </form>
+               <!-- Enlace de regreso al índice -->
+        <a href="{% url 'index_pdf' %}">Volver al Inicio</a>
+    </main>
+
+    <footer>
+        <p>Derechos reservados &copy; 2023</p>
+    </footer>
+
+</body>
+</html>
+
