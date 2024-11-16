@@ -5,33 +5,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscar Fuentes</title>
-    <link rel="stylesheet" href="{% static 'buscador_fuentes/css/styles.css' %}">
+    <!-- Vinculación a Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+    <!-- Vinculación a tu archivo de estilos CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
 <body>
-    <header>
-        <h1>Buscar Fuentes</h1>
-        <p>Ingrese el nombre de la etiqueta por el que quiere buscar la fuentes.</p>
-    </header>
+    <div class="container mt-5">
+        <header class="text-center mb-4">
+            <h1>Buscar Fuentes</h1>
+            <p>Ingrese el nombre de la etiqueta por el que quiere buscar las fuentes.</p>
+        </header>
 
-    <main>
-        <form method="get">
-            <label for="etiquetas">Buscar por Etiqueta:</label>
-            <input type="text" name="etiquetas">
-            <button type="submit">Buscar</button>
-        </form>
-        
-        <ul>
-            {% for fuente in resultados %}
-                <li>{{ fuente.nombre }} - <a href="{{ fuente.url }}" target="_blank">{{ fuente.url }}</a> - Etiquetas: {{ fuente.etiquetas }}</li>
-            {% empty %}
-                <li>No se encontraron resultados.</li>
-            {% endfor %}
-        </ul>
-        <button onclick="window.location.href='{% url 'index' %}'">Regresar al Inicio</button>
-    </main>
+        <main>
+            <!-- Formulario de búsqueda -->
+            <form method="get" class="d-flex mb-4">
+                <input type="text" name="etiquetas" class="form-control me-2" placeholder="Buscar por Etiqueta" value="{{ request.GET.etiquetas }}">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
 
-    <footer>
-        <p>Derechos reservados &copy; 2023 VIGIFIA</p>
-    </footer>
+            <!-- Resultados de la búsqueda -->
+            <h2>Resultados de la Búsqueda</h2>
+            <ul class="list-group">
+                {% for fuente in resultados %}
+                    <li class="list-group-item">
+                        <strong>{{ fuente.nombre }}</strong> - 
+                        <a href="{{ fuente.url }}" target="_blank">{{ fuente.url }}</a> - 
+                        <small>Etiquetas: {{ fuente.etiquetas }}</small>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">No se encontraron resultados.</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Botón de regreso al índice -->
+            <div class="mt-4">
+                <button class="btn btn-secondary" onclick="window.location.href='{% url 'index_fuentes' %}'">Regresar al Inicio</button>
+            </div>
+        </main>
+
+        <footer class="text-center mt-5">
+            <p>Derechos reservados &copy; 2024 VIGIFIA</p>
+        </footer>
+    </div>
 </body>
 </html>

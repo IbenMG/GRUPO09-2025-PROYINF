@@ -3,9 +3,9 @@ import json
 from .models import Fuente  # Importa el modelo Fuente que creaste
 from buscador_fuentes.services.gestor_fuentes import GestorFuentes
 
-def index(request):
-    fuentes = Fuente.objects.all()  # Obtiene todas las fuentes
-    return render(request, 'buscador_fuentes/index.html', {'fuentes': fuentes})
+def index_fuentes(request):
+    fuentes = Fuente.objects.all()  # Obtener todas las fuentes
+    return render(request, 'buscador_fuentes/index_fuentes.html', {'fuentes': fuentes})
 
 def agregar_fuentes(request):
     if request.method == "POST":

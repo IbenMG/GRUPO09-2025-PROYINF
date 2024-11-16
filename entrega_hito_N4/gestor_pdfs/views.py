@@ -8,9 +8,13 @@ from django.db.models import Q
 import os
 
 # Vista para el index que muestra los PDFs
-def index(request):
-    pdfs = DocumentoPDF.objects.all()  # Obtiene todos los PDFs de la base de datos
-    return render(request, 'gestor_pdfs/index.html', {'pdfs': pdfs})
+def index_pdfs(request):
+    pdfs = DocumentoPDF.objects.all()  # Obtener todos los PDFs
+    return render(request, 'gestor_pdfs/index_pdfs.html', {'pdfs': pdfs})
+# views.py
+def detalle_pdf(request, pdf_id):
+    documento = get_object_or_404(DocumentoPDF, id=pdf_id)
+    return render(request, 'gestor_pdfs/detalle_pdf.html', {'documento': documento})
 
 # Vista para agregar un nuevo PDF
 def agregar_pdf(request):
@@ -31,7 +35,7 @@ def buscar_pdf(request):
     else:
         pdfs = DocumentoPDF.objects.all()
     return render(request, 'gestor_pdfs/buscar_pdf.html', {'pdfs': pdfs, 'query': query})
-# Vista para descargar un PDF
+
 def descargar_pdf(request, pdf_id):
     documento = get_object_or_404(DocumentoPDF, id=pdf_id)
     file_path = os.path.join(settings.MEDIA_ROOT, documento.archivo.name)
@@ -40,8 +44,10 @@ def descargar_pdf(request, pdf_id):
     except FileNotFoundError:
         raise Http404("Archivo no encontrado")
 
-# Vista para borrar un PDF
 def borrar_pdf(request, pdf_id):
     documento = get_object_or_404(DocumentoPDF, id=pdf_id)
-    documento.delete()  # Elimina el PDF de la base de datos
-    return redirect('index_pdf')  # Redirige al índice después de borrar el PDF
+    if request.method == 'POST':
+        documento.delete()
+        messages.success(request, "El PDF ha sido eliminado con éxito.")
+        return redirect('index_pdf')  # Redirige al índice tras borrar
+    return render(request, 'gestor_pdfs/confirmar_borrar.html', {'documento': documento})

@@ -5,36 +5,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subir PDF</title>
-    <link rel="stylesheet" href="{% static 'gestor_pdfs/css/styles.css' %}">
+    <!-- Vinculación a Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <header>
-        <h1>Subir PDF</h1>
+        <div class="container mt-4">
+            <h1 class="text-center">Subir PDF</h1>
+        </div>
     </header>
 
     <main>
-        <!-- Mostrar los mensajes de éxito o error -->
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li class="message">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+        <div class="container mt-5">
+            <!-- Mostrar los mensajes de éxito o error -->
+            {% if messages %}
+                <div class="alert alert-info">
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
 
-        <form method="post" enctype="multipart/form-data">  <!-- Asegúrate de incluir enctype -->
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Guardar PDF</button>
-        </form>
-               <!-- Enlace de regreso al índice -->
-        <a href="{% url 'index_pdf' %}">Volver al Inicio</a>
+            <form method="post" enctype="multipart/form-data"> <!-- Asegúrate de incluir enctype -->
+                {% csrf_token %}
+                
+                <!-- Campo para 'nombre' -->
+                <div class="mb-3">
+                    <label for="id_nombre" class="form-label">Nombre del PDF</label>
+                    {{ form.nombre }} <!-- El campo 'nombre' con su clase de Bootstrap -->
+                </div>
+
+                <!-- Campo para 'archivo' -->
+                <div class="mb-3">
+                    <label for="id_archivo" class="form-label">Archivo PDF</label>
+                    {{ form.archivo }} <!-- El campo 'archivo' con su clase de Bootstrap -->
+                </div>
+
+                <!-- Campo para 'etiquetas' -->
+                <div class="mb-3">
+                    <label for="id_etiquetas" class="form-label">Etiquetas</label>
+                    {{ form.etiquetas }} <!-- El campo 'etiquetas' con su clase de Bootstrap -->
+                </div>
+
+                <button type="submit" class="btn btn-primary">Guardar PDF</button>
+            </form>
+
+            <!-- Enlace de regreso al índice -->
+            <div class="mt-4">
+                <a href="{% url 'index_pdfs' %}" class="btn btn-secondary">Volver al Inicio</a>
+            </div>
+        </div>
     </main>
 
-    <footer>
-        <p>Derechos reservados &copy; 2023</p>
+    <footer class="text-center mt-5">
+        <p>Derechos reservados &copy; 2024 VIGIFIA</p>
     </footer>
-
 </body>
 </html>
-

@@ -19,9 +19,16 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import admin_index  # Importa la vista
+from django.shortcuts import render
+from . import views
+
+def admin_view(request):
+    return render(request, 'admin.html')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('panel/', admin_index, name='admin_index'),  # Página central
     path('fuentes/', include('buscador_fuentes.urls')),
     path('pdfs/', include('gestor_pdfs.urls')),
 ]
