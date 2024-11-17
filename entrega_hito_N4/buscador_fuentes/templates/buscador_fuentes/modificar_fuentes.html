@@ -5,38 +5,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modificar Fuentes</title>
-    <link rel="stylesheet" href="{% static 'buscador_fuentes/css/styles.css' %}">
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 </head>
 <body>
-    <header>
-        <h1>Modificar Fuentes</h1>
-        <p>Seleccione una fuente para modificar.</p>
-    </header>
+    <div class="container mt-5">
+        <!-- Encabezado -->
+        <header class="text-center mb-4">
+            <h1>Modificar Fuentes</h1>
+            <p class="text-muted">Seleccione una fuente para modificar.</p>
+        </header>
 
-    <main>
-        <form method="get" action="{% url 'buscar_para_modificar' %}">
-            <label for="query">Buscar Fuente:</label>
-            <input type="text" name="query">
-            <button type="submit">Buscar</button>
-        </form>
-        
-        <ul>
-            {% for fuente in resultados %}
-                <li>
-                    {{ fuente.nombre }} - <a href="{{ fuente.link }}">{{ fuente.link }}</a>
-                    <a href="{% url 'modificar_fuente' fuente.id %}">Modificar</a>
-                </li>
-            {% empty %}
-                <li>No se encontraron resultados.</li>
-            {% endfor %}
-        </ul>
-        <button onclick="window.location.href='{% url 'index_fuentes' %}'">Regresar al Inicio</button>
-    </main>
+        <!-- Formulario de búsqueda -->
+        <main>
+            <form method="get" action="{% url 'buscar_para_modificar' %}" class="d-flex mb-4">
+                <input type="text" name="query" class="form-control me-2" placeholder="Buscar fuente..." value="{{ request.GET.query }}">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
 
-    <footer>
-        <p>Derechos reservados &copy; 2024 VIGIFIA</p>
-    </footer>
+            <!-- Lista de resultados -->
+            <h2 class="mb-3">Resultados</h2>
+            {% if resultados %}
+                <ul class="list-group">
+                    {% for fuente in resultados %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ fuente.nombre }}</strong> - 
+                                <a href="{{ fuente.link }}" target="_blank" class="text-decoration-none">{{ fuente.link }}</a>
+                            </div>
+                            <a href="{% url 'modificar_fuente' fuente.id %}" class="btn btn-warning btn-sm">Modificar</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="alert alert-info" role="alert">
+                    No se encontraron resultados.
+                </div>
+            {% endif %}
+
+            <!-- Botón de regreso al índice -->
+            <div class="mt-4">
+                <a href="{% url 'index_fuentes' %}" class="btn btn-secondary">Regresar al Inicio</a>
+            </div>
+        </main>
+
+        <!-- Pie de página -->
+        <footer class="text-center mt-5">
+            <p class="text-muted">Derechos reservados &copy; 2024 VIGIFIA</p>
+        </footer>
+    </div>
 </body>
 </html>

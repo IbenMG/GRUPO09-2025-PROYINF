@@ -12,45 +12,62 @@
     <link rel="stylesheet" href="{% static 'gestor_pdfs/css/styles.css' %}">
 </head>
 <body>
-    <header>
-        <div class="container mt-4">
-            <h1 class="text-center">Buscar PDF por Nombre o Etiqueta</h1>
-        </div>
-    </header>
-
-    <main>
-        <div class="container mt-5">
-            <!-- Formulario de búsqueda -->
-            <form method="get" action="{% url 'buscar_pdf' %}" class="d-flex mb-4">
-                <input type="text" name="q" placeholder="Buscar por etiqueta" value="{{ query }}" class="form-control me-2" aria-label="Buscar PDF">
-                <button type="submit" class="btn btn-primary">Buscar</button>
-            </form>
-
-            <!-- Resultados de la búsqueda -->
-            <h2>Resultados de la Búsqueda</h2>
-            <div class="list-group">
-                {% for pdf in pdfs %}
-                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                        {{ pdf.nombre }}
-                        <div>
-                            <a href="{% url 'descargar_pdf' pdf.id %}" class="btn btn-success btn-sm">Descargar</a>
-                            <a href="{% url 'confirmar_borrar' pdf.id %}" class="btn btn-danger btn-sm ms-2">Borrar</a>
-                        </div>
-                    </a>
-                {% empty %}
-                    <p>No se encontraron PDFs con esta etiqueta.</p>
-                {% endfor %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Barra lateral -->
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <div class="position-sticky">
+                <h5 class="sidebar-heading p-3">Etiquetas Disponibles</h5>
+                <ul class="nav flex-column">
+                    {% for etiqueta in etiquetas %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="?q={{ etiqueta }}">{{ etiqueta }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
+        </nav>
 
-            <!-- Enlace de regreso al índice -->
-            <div class="mt-4">
-                <a href="{% url 'index_pdfs' %}" class="btn btn-secondary">Volver al Inicio</a>
+        <!-- Contenido principal -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <header class="py-3 text-center">
+                <h1>Buscar PDF por Nombre o Etiqueta</h1>
+            </header>
+
+            <div class="container">
+                <!-- Formulario de búsqueda -->
+                <form method="get" action="{% url 'buscar_pdf' %}" class="d-flex mb-4">
+                    <input type="text" name="q" placeholder="Buscar por etiqueta" value="{{ query }}" class="form-control me-2" aria-label="Buscar PDF">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+
+                <!-- Resultados de la búsqueda -->
+                <h2>Resultados de la Búsqueda</h2>
+                <div class="list-group">
+                    {% for pdf in pdfs %}
+                        <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            {{ pdf.nombre }}
+                            <div>
+                                <a href="{% url 'descargar_pdf' pdf.id %}" class="btn btn-success btn-sm">Descargar</a>
+                                <a href="{% url 'confirmar_borrar' pdf.id %}" class="btn btn-danger btn-sm ms-2">Borrar</a>
+                            </div>
+                        </a>
+                    {% empty %}
+                        <p class="text-muted">No se encontraron PDFs con esta etiqueta.</p>
+                    {% endfor %}
+                </div>
+
+                <!-- Enlace de regreso al índice -->
+                <div class="mt-4">
+                    <a href="{% url 'index_pdfs' %}" class="btn btn-secondary">Volver al Inicio</a>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
+</div>
 
-    <footer class="text-center mt-5">
-        <p>Derechos reservados &copy; 2024 VIGIFIA</p>
-    </footer>
+<footer class="text-center mt-5">
+    <p>Derechos reservados &copy; 2024 VIGIFIA</p>
+</footer>
 </body>
 </html>
