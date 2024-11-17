@@ -51,22 +51,25 @@ def borrar_fuentes(request, fuente_id):
     return render(request, "buscador_fuentes/borrar_confirmar.html", {"fuente": fuente})
 def vistas_fuentes(request):
     return render(request, 'buscador_fuentes/vistas_fuentes.html')
+
 def buscar_fuentes(request):
-    query = request.GET.get('etiquetas', '')
-    etiquetas = Fuente.objects.values_list('etiquetas', flat=True).distinct()  # Obtener etiquetas únicas
-    etiquetas = [etiqueta for sublist in etiquetas for etiqueta in sublist.split(',')]  # Separar por comas y limpiar duplicados
+    query = request.GET.get('query', '').strip()
+    etiqueta = request.GET.get('etiqueta', '').strip()
+    resultados = []
 
-    if query:
-        resultados = Fuente.objects.filter(etiquetas__icontains=query)
-    else:
-        resultados = Fuente.objects.all()
+    if query or etiqueta:
+        if query:
+            resultados = Fuente.objects.filter(nombre__icontains=query)
+        elif etiqueta:
+            resultados = Fuente.objects.filter(etiquetas__icontains=etiqueta)
+    
+    etiquetas = Fuente.objects.values_list('etiquetas', flat=True).distinct()
 
-    context = {
+    return render(request, 'buscador_fuentes/buscar_fuentes.html', {
         'resultados': resultados,
-        'etiquetas': sorted(set(etiquetas)),  # Lista única y ordenada de etiquetas
-        'query': query,
-    }
-    return render(request, 'buscador_fuentes/buscar_fuentes.html', context)
+        'etiquetas': etiquetas,
+    })
+
 """
 def agregar_fuente(request):
     if request.method == 'POST':

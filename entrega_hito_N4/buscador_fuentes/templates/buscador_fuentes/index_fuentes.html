@@ -17,29 +17,20 @@
     </header>
 
     <main class="container my-4">
-        <section id="filtro-sources">
-            <h2>Opciones</h2>
-            <ul class="list-group">
-                <div class="mt-4">
-                <a href="{% url 'agregar_fuentes' %}" class="btn btn-primary">Agregar Fuentes</a>
-                <a href="{% url 'buscar_fuentes' %}" class="btn btn-secondary">Buscar Fuentes</a>
-                </div>
-                {% for fuente in fuentes %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ fuente.nombre }} - <a href="{% url 'modificar_fuentes' fuente.id %}" class="btn btn-sm btn-success">Modificar</a>
-                        <a href="{% url 'borrar_fuentes' fuente.id %}" class="btn btn-sm btn-danger">Borrar</a>
-                    </li>
-                {% empty %}
-                    <li>No hay fuentes disponibles.</li>
-                {% endfor %}
-
-            </ul>
+        <section id="filtro-sources" class="text-center">
+            <h2 class="mb-4">Opciones</h2>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'agregar_fuentes' %}" class="btn btn-primary btn-lg">Agregar Fuentes</a>
+                <a href="{% url 'buscar_fuentes' %}" class="btn btn-primary btn-lg">Buscar Fuentes</a>
+            </div>
         </section>
+        
     </main>
 
-    <footer class="bg-light text-center py-3">
-        <a href="{% url 'admin_index' %}" class="btn btn-secondary">Volver al Admin</a>
-        <p>Derechos reservados &copy; 2024 VIGIFIA</p>
-    </footer>
+   
 </body>
+<footer class="bg-light text-center py-3">
+    <a href="{% url 'admin_index' %}" class="btn btn-secondary mb-2">Volver al Admin</a>
+    <p>Derechos reservados &copy; 2024 VIGIFIA</p>
+</footer>
 </html>

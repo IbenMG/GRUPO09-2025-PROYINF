@@ -9,53 +9,59 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <!-- Barra lateral -->
-        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-            <div class="position-sticky">
-                <h5 class="sidebar-heading p-3">Etiquetas</h5>
-                <ul class="nav flex-column">
-                    {% for etiqueta in etiquetas %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="?etiquetas={{ etiqueta }}">{{ etiqueta }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </nav>
-
-        <!-- Contenido principal -->
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <header class="py-3">
-                <h1>Buscar Fuentes</h1>
-                <form method="get" class="d-flex mb-4">
-                    <input type="text" name="etiquetas" value="{{ query }}" class="form-control me-2" placeholder="Buscar por etiqueta">
-                    <button type="submit" class="btn btn-primary">Buscar</button>
-                </form>
-            </header>
-
-            <!-- Resultados -->
-            <section>
-                <h2>Resultados</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Barra lateral -->
+            <aside class="col-md-2 bg-light p-3" style="position: fixed; height: 100vh; left: 0; overflow-y: auto;">
+                <h4>Etiquetas</h4>
                 <ul class="list-group">
-                    {% for fuente in resultados %}
+                    {% for etiqueta in etiquetas %}
                         <li class="list-group-item">
-                            <strong>{{ fuente.nombre }}</strong> - 
-                            <a href="{{ fuente.url }}" target="_blank">{{ fuente.url }}</a>
-                            <div><small>Etiquetas: {{ fuente.etiquetas }}</small></div>
+                            <a href="?etiqueta={{ etiqueta }}" class="text-decoration-none">{{ etiqueta }}</a>
                         </li>
-                    {% empty %}
-                        <li class="list-group-item">No se encontraron resultados.</li>
                     {% endfor %}
                 </ul>
-            </section>
-        </main>
+            </aside>
+
+            <!-- Contenido principal -->
+            <main class="col-md-10 offset-md-2">
+                <header class="mt-4">
+                    <h1 class="text-center">Buscar Fuentes</h1>
+                </header>
+
+                <!-- Formulario de búsqueda -->
+                <div class="container mt-4">
+                    <form method="get" action="{% url 'buscar_fuentes' %}" class="d-flex mb-4">
+                        <input type="text" name="query" placeholder="Buscar por nombre o etiqueta" class="form-control me-2">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </form>
+                </div>
+
+                <!-- Resultados -->
+                {% if resultados %}
+                    <h2 class="mt-4">Resultados</h2>
+                    <ul class="list-group">
+                        {% for fuente in resultados %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="{{ fuente.url }}" target="_blank" class="text-decoration-none">{{ fuente.nombre }}</a>
+                                <div>
+                                    <a href="{% url 'modificar_fuentes' fuente.id %}" class="btn btn-warning btn-sm me-2">Modificar</a>
+                                    <a href="{% url 'borrar_fuentes' fuente.id %}" class="btn btn-danger btn-sm">Borrar</a>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="mt-4">No se encontraron resultados. Intenta buscar por nombre o etiqueta.</p>
+                {% endif %}
+                <footer class="text-center mt-5">
+                    <button onclick="window.location.href='{% url 'index_fuentes' %}'" class="btn btn-secondary mb-2">Regresar al Inicio</button>
+                    <p>Derechos reservados &copy; 2024 VIGIFIA</p>
+                </footer>
+                
+            </main>
+        </div>
     </div>
-</div>
-<footer class="bg-light text-center py-3">
-    <button onclick="window.location.href='{% url 'index_fuentes' %}'">Regresar al Inicio</button>
-    <p>Derechos reservados &copy; 2024 VIGIFIA</p>
-</footer>
+    
 </body>
 </html>
