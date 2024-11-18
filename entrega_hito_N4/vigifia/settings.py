@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'buscador_fuentes',
     'gestor_pdfs',
+    'plantillas',
 ]
 
 MIDDLEWARE = [

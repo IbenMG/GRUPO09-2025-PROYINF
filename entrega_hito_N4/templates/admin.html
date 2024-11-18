@@ -13,16 +13,18 @@
     <header class="bg-primary text-white text-center py-3">
         <h1>Panel de Administración</h1>
     </header>
-    <main class="container mt-4">
-        <h2>Aplicaciones disponibles</h2>
-        <ul class="list-group">
+    <main class="d-flex flex-column align-items-center justify-content-center vh-100">
+        <h2 class="mb-4">Aplicaciones disponibles</h2>
+        <ul class="list-group text-center w-50">
             <li class="list-group-item">
-                <a href="{% url 'index_pdfs' %}">Gestión de PDFs</a>
+                <a href="{% url 'index_pdfs' %}" class="btn btn-primary w-100 my-2">Gestión de PDFs</a>
             </li>
             <li class="list-group-item">
-                <a href="{% url 'index_fuentes' %}">Buscador de Fuentes</a>
+                <a href="{% url 'index_fuentes' %}" class="btn btn-primary w-100 my-2">Buscador de Fuentes</a>
             </li>
-            <!-- Agregar más enlaces según otras aplicaciones -->
+            <li class="list-group-item">
+                <a href="{% url 'index_plantillas' %}" class="btn btn-primary w-100 my-2">Gestión de Plantillas</a>
+            </li>    
         </ul>
     </main>
     <footer class="text-center mt-4">

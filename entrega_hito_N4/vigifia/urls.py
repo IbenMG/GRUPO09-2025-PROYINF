@@ -31,6 +31,7 @@ urlpatterns = [
     path('panel/', admin_index, name='admin_index'),  # Página central
     path('fuentes/', include('buscador_fuentes.urls')),
     path('pdfs/', include('gestor_pdfs.urls')),
+    path('plantillas/', include('plantillas.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
