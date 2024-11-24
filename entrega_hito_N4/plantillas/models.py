@@ -10,7 +10,6 @@ class Plantilla(models.Model):
         return self.nombre
 
 class ArchivoEntrada(models.Model):
-    usuario = models.CharField(max_length=255, blank=True, null=True)  # Opcional, si quieres registrar quién sube el archivo
     archivo = models.FileField(upload_to='archivos_entrada/', blank=True, null=True)
     texto_procesado = models.TextField(blank=True, null=True)  # Texto extraído del archivo
     fecha_subida = models.DateTimeField(auto_now_add=True)
@@ -27,3 +26,4 @@ class DocumentoGenerado(models.Model):
 
     def __str__(self):
         return f"Documento generado el {self.fecha_generacion}"
+
