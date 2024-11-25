@@ -1,0 +1,24 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.11.25)  25 NOV 2024 12:58
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**/home/claudiojimenez/Documentos/GitHub/GRUPO05-2024-PROYINF/entrega_hito_N4/m
+edia/pdf_files /home/claudiojimenez/Documentos/GitHub/GRUPO05-2024-PROYINF/entr
+ega_hito_N4/media/pdf_files /home/claudiojimenez/Documentos/GitHub/GRUPO05-2024
+-PROYINF/entrega_hito_N4/media/latex_files/SAG_implementa_digitalización_que_d
+isminuye_hasta_un_80%_los_tiempos_en_vigilancias_fitosanitarias.tex
+! Emergency stop.
+<*> ...24-PROYINF/entrega_hito_N4/media/pdf_files 
+                                                  /home/claudiojimenez/Docum...
+*** (job aborted, file error in nonstop mode)
+
+ 
+Here is how much of TeX's memory you used:
+ 4 strings out of 476182
+ 194 string characters out of 5795594
+ 1922975 words of memory out of 5000000
+ 22106 multiletter control sequences out of 15000+600000
+ 558069 words of font info for 36 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 0i,0n,0p,1b,6s stack positions out of 10000i,1000n,20000p,200000b,200000s
+!  ==> Fatal error occurred, no output PDF file produced!

@@ -73,3 +73,4 @@ def modificar_pdf(request, pk):
         form = DocumentoPDFForm(instance=pdf)
 
     return render(request, 'gestor_pdfs/modificar_pdf.html', {'form': form, 'pdf': pdf})
+
