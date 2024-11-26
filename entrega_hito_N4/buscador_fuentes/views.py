@@ -16,7 +16,7 @@ def agregar_fuentes(request):
         # Crea una nueva fuente
         nueva_fuente = Fuente(nombre=nombre, url=url, etiquetas=json.dumps(etiquetas))
         nueva_fuente.save()
-        return redirect("index")
+        return redirect("index_fuentes")
     return render(request, 'buscador_fuentes/agregar_fuentes.html')
 
 # Búsqueda de fuentes para modificar
@@ -39,7 +39,7 @@ def modificar_fuentes(request, fuente_id):
         fuente.link = request.POST.get("link")
         fuente.etiquetas = json.dumps(request.POST.get("etiquetas").split(","))
         fuente.save()
-        return redirect("index")
+        return redirect("index_fuentes")
     return render(request, "buscador_fuentes/modificar_detalle.html", {"fuente": fuente})
 
 # Borrar una fuente
@@ -47,7 +47,7 @@ def borrar_fuentes(request, fuente_id):
     fuente = Fuente.objects.get(id=fuente_id)
     if request.method == "POST":
         fuente.delete()
-        return redirect("index")
+        return redirect("index_fuentes")
     return render(request, "buscador_fuentes/borrar_confirmar.html", {"fuente": fuente})
 def vistas_fuentes(request):
     return render(request, 'buscador_fuentes/vistas_fuentes.html')

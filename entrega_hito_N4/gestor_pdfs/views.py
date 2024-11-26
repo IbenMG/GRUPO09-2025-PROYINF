@@ -22,7 +22,7 @@ def agregar_pdf(request):
         form = DocumentoPDFForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('index_pdf')  # Redirige al índice después de agregar el PDF
+            return redirect('index_pdfs')  # Redirige al índice después de agregar el PDF
     else:
         form = DocumentoPDFForm()
     return render(request, 'gestor_pdfs/agregar_pdf.html', {'form': form})
@@ -58,7 +58,7 @@ def borrar_pdf(request, pdf_id):
     if request.method == 'POST':
         documento.delete()
         messages.success(request, "El PDF ha sido eliminado con éxito.")
-        return redirect('index_pdf')  # Redirige al índice tras borrar
+        return redirect('index_pdfs')  # Redirige al índice tras borrar
     return render(request, 'gestor_pdfs/confirmar_borrar.html', {'documento': documento})
 
 def modificar_pdf(request, pk):
