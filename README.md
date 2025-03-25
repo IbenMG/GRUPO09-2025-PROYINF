@@ -1,4 +1,4 @@
-# GRUPO05-2024-PROYINF
+# GRUPO05-2025-PROYINF
 Este es el repositorio del grupo 09 conformado por:
 Integrantes
 * Jose Luis Beltrán - Rol: 202030548-k
