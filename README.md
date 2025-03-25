@@ -1,11 +1,10 @@
 # GRUPO05-2024-PROYINF
-Este es el repositorio del grupo 05 conformado por:
+Este es el repositorio del grupo 09 conformado por:
 Integrantes
-* Claudio Jimenez - Rol: 202273587-2
-* Lucas Morrison - Rol: 202273547-3
+* Jose Luis Beltrán - Rol: 202030548-k
 * Iben Muñoz - Rol: 202204674-0
 * Rafael Baeza - Rol:202204598-1
-*  **Tutor**: Rodrigo Ramirez
+*  **Tutor**: Eduardo Mendoza
 *  [enlace video presentación del cliente](https://www.youtube.com/watch?v=abJau21SDIk)
 
 ## Cambios Hito N°2
