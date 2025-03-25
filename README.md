@@ -26,5 +26,5 @@ Integrantes
   
 ## Wiki
 
-Puede acceder a la wiki mediante el siguiente [enlace](https://github.com/ClaudioJimenezA/GRUPO05-2024-PROYINF/wiki)
+Puede acceder a la wiki mediante el siguiente [enlace](https://github.com/Panconmanjar1314/GRUPO09-2025-PROYINF/wiki)
   
