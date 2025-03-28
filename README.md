@@ -23,7 +23,7 @@ Puede acceder a la wiki mediante el siguiente [enlace](https://github.com/Pancon
 * Facilitar la búsqueda y descarga de documentos PDF clasificados.
 * Integrar la solución en la infraestructura del cliente mediante un servidor, balanceador de carga y base de datos.
 
-## Estado de los Objetivos
+## Estado de los Objetivos actuales
 * Clasificación de fuentes de interés: Parcialmente logrado. Se permite almacenar y gestionar fuentes, pero falta integración con modelos de mercado.
 * Automatización de boletines: Parcialmente logrado. Se usa procesamiento de lenguaje natural para resúmene pero con limitaciones.
 * Aplicación web estable e integrada: Logrado. La solución se implementa con Django y microservicios, lo que facilita su despliegue y compatibilidad con el sistema del cliente.
