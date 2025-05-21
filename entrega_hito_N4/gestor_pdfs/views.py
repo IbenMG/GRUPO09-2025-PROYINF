@@ -1,108 +1,76 @@
-from django.shortcuts import render, redirect
-import json
-from .models import Fuente  # Importa el modelo Fuente que creaste
-from buscador_fuentes.services.gestor_fuentes import GestorFuentes
-
-def index_fuentes(request):
-    fuentes = Fuente.objects.all()  # Obtener todas las fuentes
-    return render(request, 'buscador_fuentes/index_fuentes.html', {'fuentes': fuentes})
-
-def agregar_fuentes(request):
-    if request.method == "POST":
-        nombre = request.POST.get("nombre")
-        url = request.POST.get("url")
-        etiquetas = request.POST.get("etiquetas").split(",")
-
-        # Crea una nueva fuente
-        nueva_fuente = Fuente(nombre=nombre, url=url, etiquetas=json.dumps(etiquetas))
-        nueva_fuente.save()
-        return redirect("index_fuentes")
-    return render(request, 'buscador_fuentes/agregar_fuentes.html')
-
-# Búsqueda de fuentes para modificar
-def buscar_para_modificar(request):
-    query = request.GET.get("query")
-    resultados = Fuente.objects.filter(nombre__icontains=query) | Fuente.objects.filter(etiquetas__contains=query)
-    return render(request, "buscador_fuentes/modificar_fuentes.html", {"resultados": resultados})
-
-# Búsqueda de fuentes para borrar
-def buscar_para_borrar(request):
-    query = request.GET.get("query")
-    resultados = Fuente.objects.filter(nombre__icontains=query) | Fuente.objects.filter(etiquetas__contains=query)
-    return render(request, "buscador_fuentes/borrar_fuentes.html", {"resultados": resultados})
-
-# Modificar una fuente
-def modificar_fuentes(request, fuente_id):
-    fuente = Fuente.objects.get(id=fuente_id)
-    if request.method == "POST":
-        fuente.nombre = request.POST.get("nombre")
-        fuente.link = request.POST.get("link")
-        fuente.etiquetas = json.dumps(request.POST.get("etiquetas").split(","))
-        fuente.save()
-        return redirect("index_fuentes")
-    return render(request, "buscador_fuentes/modificar_detalle.html", {"fuente": fuente})
-
-# Borrar una fuente
-def borrar_fuentes(request, fuente_id):
-    fuente = Fuente.objects.get(id=fuente_id)
-    if request.method == "POST":
-        fuente.delete()
-        return redirect("index_fuentes")
-    return render(request, "buscador_fuentes/borrar_confirmar.html", {"fuente": fuente})
-def vistas_fuentes(request):
-    return render(request, 'buscador_fuentes/vistas_fuentes.html')
-
+from django.shortcuts import render, get_object_or_404, redirect
+from django.conf import settings
+from django.http import FileResponse, Http404
+from .models import DocumentoPDF
+from .forms import DocumentoPDFForm
+from django.contrib import messages
 from django.db.models import Q
+import os
 
-def buscar_fuentes(request):
-    query = request.GET.get('query', '').strip()
-    etiqueta = request.GET.get('etiqueta', '').strip()
+# Vista para el index que muestra los PDFs
+def index_pdfs(request):
+    pdfs = DocumentoPDF.objects.filter(publicado=True)  # Solo PDFs publicados
+    return render(request, 'gestor_pdfs/index_pdfs.html', {'pdfs': pdfs})
 
-    filtros = Q()
+# views.py
+def detalle_pdf(request, pdf_id):
+    documento = get_object_or_404(DocumentoPDF, id=pdf_id, publicado=True)
+    return render(request, 'gestor_pdfs/detalle_pdf.html', {'documento': documento})
+
+# Vista para agregar un nuevo PDF
+def agregar_pdf(request):
+    if request.method == 'POST':
+        form = DocumentoPDFForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('index_pdfs')  # Redirige al índice después de agregar el PDF
+    else:
+        form = DocumentoPDFForm()
+    return render(request, 'gestor_pdfs/agregar_pdf.html', {'form': form})
+
+# Vista para buscar PDFs
+def buscar_pdf(request):
+    query = request.GET.get('q', '')
+    etiquetas = DocumentoPDF.objects.values_list('etiquetas', flat=True).distinct()
+    etiquetas = [etiqueta for sublist in etiquetas for etiqueta in sublist.split(',')]  # Divide las etiquetas separadas por comas
+
     if query:
-        filtros &= Q(nombre__icontains=query)
-    if etiqueta:
-        filtros &= Q(etiquetas__icontains=etiqueta)
+        pdfs = DocumentoPDF.objects.filter(publicado=True, etiquetas__icontains=query)
+    else:
+        pdfs = DocumentoPDF.objects.filter(publicado=True)
 
-    resultados = Fuente.objects.filter(filtros) if filtros else Fuente.objects.all()
-    etiquetas = Fuente.objects.values_list('etiquetas', flat=True).distinct()
+    context = {
+        'pdfs': pdfs,
+        'etiquetas': sorted(set(etiquetas)),  # Ordena y elimina duplicados
+        'query': query,
+    }
+    return render(request, 'gestor_pdfs/buscar_pdf.html', context)
 
-    return render(request, 'buscador_fuentes/buscar_fuentes.html', {
-        'resultados': resultados,
-        'etiquetas': etiquetas,
-    })
+def descargar_pdf(request, pdf_id):
+    documento = get_object_or_404(DocumentoPDF, id=pdf_id, publicado=True)
+    file_path = os.path.join(settings.MEDIA_ROOT, documento.archivo.name)
+    try:
+        return FileResponse(open(file_path, 'rb'), content_type='application/pdf')
+    except FileNotFoundError:
+        raise Http404("Archivo no encontrado")
 
-"""
-def agregar_fuente(request):
+def borrar_pdf(request, pdf_id):
+    documento = get_object_or_404(DocumentoPDF, id=pdf_id)
     if request.method == 'POST':
-        nombre = request.POST['nombre']
-        link = request.POST['link']
-        etiquetas = request.POST['etiquetas'].split(',')
-        GestorFuentes.agregar_fuente(nombre, link, etiquetas)
-        return redirect('vista_fuentes')
+        documento.delete()
+        messages.success(request, "El PDF ha sido eliminado con éxito.")
+        return redirect('index_pdfs')  # Redirige al índice tras borrar
+    return render(request, 'gestor_pdfs/confirmar_borrar.html', {'documento': documento})
 
-    return render(request, 'buscador_fuentes/agregar_fuente.html')
+def modificar_pdf(request, pk):
+    pdf = get_object_or_404(DocumentoPDF, pk=pk)
 
-def buscar_fuentes(request):
-    etiqueta = request.GET.get('etiqueta', '')
-    fuentes = GestorFuentes.buscar_fuentes_por_etiqueta(etiqueta)
-    return render(request, 'buscador_fuentes/buscar_fuentes.html', {'fuentes': fuentes})
-
-def modificar_fuente(request, nombre):
     if request.method == 'POST':
-        nuevo_nombre = request.POST.get('nuevo_nombre')
-        nuevo_link = request.POST.get('nuevo_link')
-        nuevas_etiquetas = request.POST.get('nuevas_etiquetas').split(',')
-        GestorFuentes.modificar_fuente(nombre, nuevo_nombre, nuevo_link, nuevas_etiquetas)
-        return redirect('vista_fuentes')
+        form = DocumentoPDFForm(request.POST, instance=pdf)
+        if form.is_valid():
+            form.save()
+            return redirect('buscar_pdf')  # Redirige al listado o a otra página
+    else:
+        form = DocumentoPDFForm(instance=pdf)
 
-    return render(request, 'buscador_fuentes/modificar_fuente.html', {'nombre': nombre})
-
-def eliminar_fuente(request, nombre):
-    GestorFuentes.eliminar_fuente(nombre)
-    return redirect('vista_fuentes')
-
-def vista_fuentes(request):
-    fuentes = GestorFuentes.mostrar_fuentes()
-    return render(request, 'buscador_fuentes/vista_fuentes.html', {'fuentes': fuentes})
-"""
+    return render(request, 'gestor_pdfs/modificar_pdf.html', {'form': form, 'pdf': pdf})
