@@ -32,3 +32,4 @@ class DocumentoPDFTestCase(TestCase):
         url = reverse('detalle_pdf', args=[self.pdf_no_publicado.id])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
+ 
