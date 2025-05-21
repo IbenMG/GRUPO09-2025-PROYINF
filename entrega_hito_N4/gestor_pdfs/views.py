@@ -9,11 +9,12 @@ import os
 
 # Vista para el index que muestra los PDFs
 def index_pdfs(request):
-    pdfs = DocumentoPDF.objects.all()  # Obtener todos los PDFs
+    pdfs = DocumentoPDF.objects.filter(publicado=True)  # Solo PDFs publicados
     return render(request, 'gestor_pdfs/index_pdfs.html', {'pdfs': pdfs})
+
 # views.py
 def detalle_pdf(request, pdf_id):
-    documento = get_object_or_404(DocumentoPDF, id=pdf_id)
+    documento = get_object_or_404(DocumentoPDF, id=pdf_id, publicado=True)
     return render(request, 'gestor_pdfs/detalle_pdf.html', {'documento': documento})
 
 # Vista para agregar un nuevo PDF
@@ -34,9 +35,9 @@ def buscar_pdf(request):
     etiquetas = [etiqueta for sublist in etiquetas for etiqueta in sublist.split(',')]  # Divide las etiquetas separadas por comas
 
     if query:
-        pdfs = DocumentoPDF.objects.filter(etiquetas__icontains=query)
+        pdfs = DocumentoPDF.objects.filter(publicado=True, etiquetas__icontains=query)
     else:
-        pdfs = DocumentoPDF.objects.all()
+        pdfs = DocumentoPDF.objects.filter(publicado=True)
 
     context = {
         'pdfs': pdfs,
@@ -46,7 +47,7 @@ def buscar_pdf(request):
     return render(request, 'gestor_pdfs/buscar_pdf.html', context)
 
 def descargar_pdf(request, pdf_id):
-    documento = get_object_or_404(DocumentoPDF, id=pdf_id)
+    documento = get_object_or_404(DocumentoPDF, id=pdf_id, publicado=True)
     file_path = os.path.join(settings.MEDIA_ROOT, documento.archivo.name)
     try:
         return FileResponse(open(file_path, 'rb'), content_type='application/pdf')
@@ -73,4 +74,3 @@ def modificar_pdf(request, pk):
         form = DocumentoPDFForm(instance=pdf)
 
     return render(request, 'gestor_pdfs/modificar_pdf.html', {'form': form, 'pdf': pdf})
-
